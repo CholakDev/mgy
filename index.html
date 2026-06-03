@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цифрова гігієна у БЗВП: Поглиблений курс</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* БАЗОВІ НАЛАШТУВАННЯ ТА КОЛЬОРИ */
+        :root {
+            --bg-main: #030406;
+            --bg-slide: #080b10;
+            --accent-green: #00ff66;
+            --accent-warning: #ffb700;
+            --accent-danger: #ff3333;
+            --accent-blue: #00ccff;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            padding: 50px 0;
+            font-family: 'Exo 2', sans-serif;
+            color: var(--text-main);
+        }
+
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: var(--bg-slide);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(0, 255, 102, 0.03);
+            padding: 50px 70px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ТАКТИЧНИЙ ІНТЕРФЕЙС (ДЕКОР) */
+        .slide-container::before {
+            content: 'SYSTEM.SECURE // UKR_MILITARY_PROTOCOL_v3.1_ADVANCED';
+            position: absolute;
+            top: 15px;
+            left: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-green);
+            opacity: 0.7;
+            letter-spacing: 2px;
+        }
+        .slide-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-blue) 50%, transparent 100%);
+            opacity: 0.5;
+        }
+
+        /* ТИПОГРАФІКА */
+        h1, h2, h3 { font-family: 'Roboto Condensed', sans-serif; text-transform: uppercase; }
+        
+        .slide-title {
+            color: var(--text-main);
+            font-size: 40px;
+            margin-bottom: 25px;
+            border-left: 8px solid var(--accent-green);
+            padding-left: 20px;
+            line-height: 1.2;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+        }
+
+        p, li { font-size: 18px; line-height: 1.5; color: var(--text-muted); }
+        strong { color: #ffffff; font-weight: 600; }
+
+        .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+
+        /* ВСТАВКИ (ВИНОСКИ) */
+        .tactical-insert {
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px solid rgba(0, 255, 102, 0.3);
+            border-left: 4px solid var(--accent-green);
+            padding: 15px 20px;
+            margin-top: 20px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .tactical-insert.warning {
+            background: rgba(255, 183, 0, 0.05);
+            border-color: rgba(255, 183, 0, 0.3);
+            border-left: 4px solid var(--accent-warning);
+        }
+        .tactical-insert.danger {
+            background: rgba(255, 51, 51, 0.05);
+            border-color: rgba(255, 51, 51, 0.3);
+            border-left: 4px solid var(--accent-danger);
+        }
+        .tactical-insert h4 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tactical-insert p { font-size: 14px; margin: 0; color: #cbd5e1; line-height: 1.4; }
+
+        /* СІТКИ ТА ЕЛЕМЕНТИ */
+        .two-column { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 40px; align-items: center; }
+        .two-column.equal { grid-template-columns: 1fr 1fr; }
+
+        .image-wrapper {
+            border: 1px solid var(--border-color);
+            position: relative;
+            height: 420px;
+            overflow: hidden;
+            background: #000;
+        }
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+            filter: grayscale(20%) contrast(110%);
+        }
+        .image-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2rVq1X8GBgYmBggwAAgwADbQBQY1bJjwAAAAAElFTkSuQmCC') repeat;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        /* ТАБЛИЦЯ */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { background: #111827; color: var(--accent-green); padding: 12px 15px; text-align: left; border: 1px solid var(--border-color); font-size: 16px;}
+        td { padding: 12px 15px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.02); font-size: 16px;}
+
+        /* ТАЙМЛАЙН */
+        .timeline { display: flex; justify-content: space-between; position: relative; padding-top: 15px; }
+        .timeline::before {
+            content: ''; position: absolute; top: 30px; left: 0; width: 100%; height: 2px; background: var(--border-color);
+        }
+        .timeline-step { width: 19%; position: relative; text-align: center; background: var(--bg-slide); padding-top: 35px; }
+        .timeline-step::after {
+            content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 12px; height: 12px;
+            background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 10px var(--accent-green);
+        }
+        .timeline-step h3 { color: #fff; margin-bottom: 10px; font-size: 18px; }
+        .timeline-step p { font-size: 14px; line-height: 1.4; color: #94a3b8; }
+
+        /* СПИСКИ */
+        ul.custom-list { list-style: none; }
+        ul.custom-list li { position: relative; padding-left: 30px; margin-bottom: 12px; }
+        ul.custom-list li i { position: absolute; left: 0; top: 4px; color: var(--accent-green); font-size: 16px;}
+
+        /* ТИТУЛЬНИЙ ТА ФІНАЛЬНИЙ СЛАЙДИ */
+        .title-slide { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+        .title-slide h1 { font-size: 85px; color: var(--accent-green); letter-spacing: 3px; margin-bottom: 15px; text-shadow: 0 0 20px rgba(0,255,102,0.3); }
+        .title-slide .subtitle { font-size: 26px; color: var(--accent-warning); font-family: 'JetBrains Mono'; }
+        
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
+        .stat-box { border: 1px solid var(--border-color); padding: 15px; text-align: center; background: #0b1016;}
+        .stat-box .num { font-size: 32px; color: var(--accent-blue); font-weight: bold; font-family: 'JetBrains Mono'; margin-bottom: 5px;}
+        .stat-box .label { font-size: 14px; text-transform: uppercase; color: var(--text-muted);}
+    </style>
+</head>
+<body>
+
+    <div class="slide-container">
+        <div class="title-slide">
+            <h1>ЦИФРОВА ГІГІЄНА</h1>
+            <p class="subtitle">ПОГЛИБЛЕНИЙ КУРС З ТАКТИЧНОЇ БЕЗПЕКИ ТА РЕБ-ПРОТИДІЇ</p>
+            <div class="tactical-insert" style="margin-top: 50px; max-width: 700px; text-align: left;">
+                <h4><i class="fas fa-microchip"></i> МОДУЛЬ БЗВП: ВИЖИВАННЯ В УМОВАХ ЕЛЕКТРОМАГНІТНОЇ ВІЙНИ</h4>
+                <p>Сучасна війна — це війна датчиків та алгоритмів. Більше 70% артилерійських ударів по тилових базах та КСП (командно-спостережних пунктах) наносяться в результаті перехоплення сигналів мобільних пристроїв військовослужбовців.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2 class="slide-title">Електромагнітний слід: Фізика демаскування</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <p>Смартфон — це не просто засіб зв'язку, це потужний радіопередавач. Навіть із вимкненим екраном фонові процеси операційної системи (Android/iOS) постійно сканують ефір, створюючи електромагнітний слід, який бачать ворожі аналізатори спектра.</p>
+                    
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <div class="num">30 км</div>
+                            <div class="label">Дальність пеленгації GSM/LTE сигналу</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="num">2 км</div>
+                            <div class="label">Дальність виявлення Wi-Fi модулів</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="num">200 м</div>
+                            <div class="label">Засікання Bluetooth (навушники/годинники)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tactical-insert danger" style="margin-top: 25px;">
+                        <h4><i class="fas fa-radar"></i> СИСТЕМИ РЕР (Радіоелектронної розвідки)</h4>
+                        <p>Апаратура противника не шукає ваш контент. Вона шукає <strong>аномалії в ефірі</strong>. Якщо в лісопосадці, де немає населених пунктів, раптово з'являється 5-10 активних MAC-адрес Wi-Fi або Bluetooth-з'єднань — туди автоматично скеровується розвідувальний БПЛА.</p>
+                    </div>
+                </div>
+                <div class="image-wrapper">
+                    <img src="photo1.png" alt="Радіочастотний аналіз">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2 class="slide-title">OSINT-загрози: Глибокий аналіз фотоматеріалів</h2>
+        <div class="content-area">
+            <div class="two-column equal">
+                <div class="image-wrapper">
+                    <img src="photo0.png" alt="Приклад фото скану">
+                </div>
+                <div>
+                    <p>Фотографія — це контейнер даних. Розвідка по відкритих джерелах (OSINT) використовує автоматизовані скрипти для масового збору фото з соцмереж (Telegram-канали, TikTok, Instagram) та їх аналізу.</p>
+                    <ul class="custom-list" style="margin-top: 15px;">
+                        <li><i class="fas fa-map-pin"></i> <strong>EXIF GPS & Altitude:</strong> Файл зберігає не лише координати (широту/довготу), але й <em>висоту над рівнем моря</em>. Це дозволяє ворогу зрозуміти, на якому поверсі будівлі ви знаходитесь.</li>
+                        <li><i class="fas fa-camera"></i> <strong>Унікальні ідентифікатори:</strong> Теги <code>Lens Model</code> або серійний номер матриці камери можуть зв'язати анонімне фото з конкретною особою, якщо раніше вона публікувала фото з цього ж пристрою.</li>
+                    </ul>
+                    
+                    <div class="tactical-insert warning">
+                        <h4><i class="fas fa-eye"></i> ВІЗУАЛЬНА ГЕОЛОКАЦІЯ (Без EXIF)</h4>
+                        <p>Навіть якщо метадані видалені, OSINT-аналітики використовують сервіси типу SunCalc (визначення часу та місця за довжиною тіней), аналіз рельєфу (лінії ЛЕП, вигини річок) для геолокації знімка з точністю до 10 метрів.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2 class="slide-title">Комплекси РЕР: IMSI-кетчери (Тріангуляція)</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <p>У зоні бойових дій цивільні вишки зв'язку часто пошкоджені. Противник використовує повітряні платформи (наприклад, БПЛА «Орлан-10» з корисним навантаженням «Леєр-3») для імітації базових станцій (IMSI-catchers).</p>
+                    <ul class="custom-list" style="margin-top: 15px;">
+                        <li><i class="fas fa-broadcast-tower"></i> <strong>Як це працює:</strong> Дрон транслює потужний сигнал мобільної мережі. Ваш телефон, шукаючи кращий зв'язок, автоматично до нього підключається, передаючи свої унікальні номери <strong>IMSI (номер SIM)</strong> та <strong>IMEI (номер апарата)</strong>.</li>
+                        <li><i class="fas fa-bullseye"></i> <strong>Тріангуляція:</strong> Одночасна пеленгація сигналу з кількох антен комплексу дозволяє математично вирахувати координати абонента на землі.</li>
+                    </ul>
+                    
+                    <div class="tactical-insert">
+                        <h4><i class="fas fa-project-diagram"></i> АНАЛІЗ ТРАФІКУ</h4>
+                        <p>Система фіксує не лише координати, але й "граф зв'язків". Якщо 5 телефонів часто переміщуються разом, а один з них здійснює багато дзвінків — алгоритм позначає його як телефон командира підрозділу.</p>
+                    </div>
+                </div>
+                <div class="image-wrapper">
+                    <img src="photo2.png" alt="Апаратура зв'язку">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2 class="slide-title">Ударний контур: Правило "3-х хвилин"</h2>
+        <div class="content-area">
+            <div class="two-column equal">
+                <div style="text-align: center; background: #0b1016; border: 1px solid var(--border-color); padding: 40px;">
+                    <div style="font-size: 140px; font-weight: 700; color: var(--accent-danger); line-height: 1; font-family: 'JetBrains Mono'; text-shadow: 0 0 20px rgba(255,51,51,0.4);">180</div>
+                    <h3 style="font-size: 24px; color: var(--text-main); margin-top: 10px; letter-spacing: 2px;">СЕКУНД (3 ХВИЛИНИ)</h3>
+                    <p style="margin-top: 10px; font-size: 16px;">Середній час закриття циклу Sensor-to-Shooter</p>
+                </div>
+                <div>
+                    <p>Концепція <strong>Kill Chain (Ланцюг ураження)</strong> у сучасній війні повністю автоматизована. Дані передаються між системами без голосового дублювання по рації.</p>
+                    <ul class="custom-list" style="margin-top: 15px;">
+                        <li><strong>0:00</strong> — Боєць вимикає авіарежим, телефон реєструється в мережі.</li>
+                        <li><strong>0:15</strong> — Комплекс РЕР пеленгує сигнал, генерує координати.</li>
+                        <li><strong>0:45</strong> — Координати автоматично падають на планшет артилерійського розрахунку або операторів БПЛА противника.</li>
+                        <li><strong>1:30 - 3:00</strong> — Нанесення вогневого ураження (касетні боєприпаси, РСЗВ, FPV).</li>
+                    </ul>
+                    
+                    <div class="tactical-insert danger" style="margin-top: 20px;">
+                        <h4><i class="fas fa-stopwatch"></i> ВИСНОВОК</h4>
+                        <p>Написати коротке "Я живий" і сховати телефон — це достатній час для вашого знищення. Радіовипромінювання дорівнює смерті.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2 class="slide-title">Криптографічний захист: Аналіз месенджерів</h2>
+        <div class="content-area">
+            <p>Жоден софт не захистить від пеленгації фізичного радіосигналу апарата. Але правильний вибір месенджера критично важливий для захисту <em>вмісту</em> переданої інформації (накази, карти).</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Платформа</th>
+                        <th style="width: 25%;">Протокол шифрування</th>
+                        <th style="width: 35%;">Архітектура та зберігання даних</th>
+                        <th style="width: 20%;">Рівень довіри</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Signal</strong></td>
+                        <td>Signal Protocol (E2EE)</td>
+                        <td>Децентралізований. Ключі зберігаються <strong>тільки на пристрої</strong>. Відкритий вихідний код (Open Source).</td>
+                        <td style="color: var(--accent-green); font-weight: bold;">МАКСИМАЛЬНИЙ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WhatsApp</strong></td>
+                        <td>Signal Protocol (E2EE)</td>
+                        <td>Закритий код. Корпорація Meta збирає та зберігає <strong>метадані</strong> (хто, кому, коли і звідки писав).</td>
+                        <td style="color: var(--accent-warning); font-weight: bold;">СЕРЕДНІЙ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Telegram</strong></td>
+                        <td>MTProto (Клієнт-Сервер)</td>
+                        <td>Наскрізне шифрування відсутнє в звичайних чатах. Усі файли та ключі <strong>зберігаються на серверах</strong>.</td>
+                        <td style="color: var(--accent-danger); font-weight: bold;">КРИТИЧНИЙ РИЗИК</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tactical-insert warning">
+                <h4><i class="fas fa-shield-alt"></i> ОФІЦІЙНА ЗАБОРОНА</h4>
+                <p>Використання Telegram для передачі службової інформації заборонено. Адміністратори серверів Telegram мають технічну можливість читати будь-який несекретний чат або групу. Звичайні телефонні дзвінки та SMS перехоплюються миттєво комплексами радіоперехоплення.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2 class="slide-title">Апаратна ізоляція (Hardware Security)</h2>
+        <div class="content-area">
+            <div class="two-column equal">
+                <div>
+                    <ul class="custom-list">
+                        <li><i class="fas fa-sim-card"></i> <strong>Правило "Нульової SIM":</strong> На бойовому виході телефон не повинен містити активної SIM-карти. Використовуйте апарат виключно як термінал для тактичних систем (Кропива, Delta) через захищений Wi-Fi роутер (Starlink/Mesh).</li>
+                        <li><i class="fas fa-fingerprint"></i> <strong>Біометрична вразливість:</strong> Біометрія (FaceID, TouchID) юридично і фізично не захищена. У випадку поранення, контузії або полону ворог розблокує пристрій вашим тілом. Використовуйте тільки складний цифровий PIN-код (мінімум 6 цифр).</li>
+                        <li><i class="fas fa-suitcase"></i> <strong>Клітка Фарадея (Faraday Bag):</strong> Спеціальний чохол, що екранує електромагнітне випромінювання. Якщо телефон потрібно пронести увімкненим, він має бути в екранованому чохлі, який фізично блокує 100% сигналів (GPS, GSM, Wi-Fi).</li>
+                    </ul>
+                </div>
+                <div class="image-wrapper">
+                    <img src="photo3.png" alt="Тактичне спорядження екранування">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2 class="slide-title">Протокол цифрової ізоляції (SOP)</h2>
+        <div class="content-area">
+            <p>Стандартна операційна процедура (SOP) поводження з особистими пристроями. Будь-яке відхилення карається командиром підрозділу, оскільки ставить під загрозу життя всього особового складу.</p>
+            
+            <div class="timeline">
+                <div class="timeline-step">
+                    <h3>01. ПІДГОТОВКА</h3>
+                    <p>Резервне копіювання потрібних даних. Видалення особистих фото, соцмереж, історії браузерів. Скидання рекламного ідентифікатора (Ad ID).</p>
+                </div>
+                <div class="timeline-step">
+                    <h3>02. "ЧЕРВОНА ЗОНА"</h3>
+                    <p>Апаратне вилучення SIM. Увімкнення "Авіарежиму". Відключення геолокації в налаштуваннях ОС. Телефон поміщається в екранований чохол.</p>
+                </div>
+                <div class="timeline-step">
+                    <h3>03. ВИКОРИСТАННЯ</h3>
+                    <p>Термінал використовується виключно в укриттях або бліндажах (офлайн-карти). Жодних фото чи відеофіксацій об'єктів навколо.</p>
+                </div>
+                <div class="timeline-step">
+                    <h3>04. ЕКСТРЕНЕ ЗНИЩЕННЯ</h3>
+                    <p>При неминучій загрозі полону — обов'язкова ініціація скидання до заводських налаштувань (Wipe) або фізичне знищення плати пристрою пострілом/ударом.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" style="background: linear-gradient(rgba(3, 4, 6, 0.9), rgba(3, 4, 6, 0.9)), url('https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?q=80&w=1280&auto=format&fit=crop') center/cover;">
+        <div class="content-area" style="align-items: center; text-align: center;">
+            <h2 style="font-size: 50px; color: var(--accent-green); margin-bottom: 25px; text-transform: uppercase;">НЕОБЕРЕЖНІСТЬ — ЦЕ ЗБРОЯ ВОРОГА</h2>
+            <div style="max-width: 900px;">
+                <p style="font-size: 24px; color: #fff; margin-bottom: 25px; line-height: 1.4;">Цифрова гігієна — це не рекомендація, це фундамент тактичного виживання. Ваша цифрова тінь у радіоефірі є набагато помітнішою для ворога, ніж ваш фізичний силует у тепловізорі.</p>
+                <p style="font-size: 22px; color: var(--accent-danger); font-weight: bold;">Смартфон без дисципліни — це радіокерована міна у вашій власній кишені.</p>
+                
+                <div class="tactical-insert" style="border-left: none; border-top: 4px solid var(--accent-green); border-bottom: 4px solid var(--accent-green); display: inline-block; padding: 25px 40px; margin-top: 40px; background: rgba(0, 255, 102, 0.1);">
+                    <h3 style="color: var(--accent-green); font-size: 32px; letter-spacing: 4px; margin: 0;">ДОПОВІДЬ ЗАКІНЧЕНО // ДЯКУЮ ЗА УВАГУ!</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
